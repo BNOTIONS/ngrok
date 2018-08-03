@@ -1,5 +1,4 @@
-FROM intersect/debian:latest
-
+FROM intersect/debian:latest 
 COPY entrypoint.sh /entrypoint.sh
 
 COPY bin/ngrokd /usr/local/bin/ngrokd
@@ -14,3 +13,6 @@ LABEL BUILD_NUMBER ${BUILD_NUMBER}
 
 ENV GIT_COMMIT ${GIT_COMMIT}
 ENV BUILD_NUMBER ${BUILD_NUMBER}
+
+EXPOSE 443
+EXPOSE 4443
