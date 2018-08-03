@@ -1,7 +1,7 @@
-SHELL = /usr/bin/env bash
+SHELL = /usr/bin/env bash -eu
 
-DOMAIN = ngrok.bnotions.com
-EMAIL = softwareadmin@bnotions.com
+DOMAIN = ''
+EMAIL = ''
 CLIENT_NAME = intersect
 PROJECT_NAME = ngrok
 DOCKER_NAME = $(CLIENT_NAME)/$(PROJECT_NAME)
@@ -128,7 +128,6 @@ docker-image:
 	docker build \
 		--build-arg BUILD_NUMBER \
 		--build-arg GIT_COMMIT \
-		--build-arg DOMAIN=$(DOMAIN) \
 		--tag "$$DOCKER_NAME:$$TAG" .
 
 docker-tag:
@@ -146,13 +145,13 @@ docker-push:
 	@echo Pushed: "$$REPOSITORY/$$DOCKER_NAME:$$TAG"
 
 docker-sonar:
-	docker pull 108026493146.dkr.ecr.us-east-1.amazonaws.com/intersect/sonar-scanner:latest
+	docker pull "$$REPOSITORY/intersect/sonar-scanner:latest"
 	docker run --rm \
 		--userns host \
 		--user $$(id -u $$USER) \
 		--volume "$$PWD":/usr/src/app \
 		--workdir /usr/src/app \
-		108026493146.dkr.ecr.us-east-1.amazonaws.com/intersect/sonar-scanner:latest \
+		"$$REPOSITORY/intersect/sonar-scanner:latest" \
 			-D sonar.host.url="$$SONAR_HOST" \
 			-D sonar.login="$$SONAR_LOGIN" \
 			-D sonar.projectKey="$$CLIENT_NAME:$$PROJECT_NAME" \
