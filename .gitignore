@@ -12,3 +12,5 @@ src/ngrok/server/assets/
 /?
 letsencrypt
 .cache
+.DS_Store
+*.zip
